@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
 //    convert_base(0, 4);
 //    convert_base2(99,4);
 //    char s[10] = "12345B";
-    char *s = "1234b";
+    char *s = "12345b";
     int res = restore(s, 13);
     printf("%d", res);
     return 0;
