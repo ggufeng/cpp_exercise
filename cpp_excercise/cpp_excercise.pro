@@ -1,4 +1,6 @@
 CONFIG += console
+CONFIG += c++11
+
 
 SOURCES += \
     3.1.1.cpp \
@@ -7,6 +9,7 @@ SOURCES += \
     4.2.1.cpp \
     4.1.1.cpp \
     4.1.2.cpp \
-    5.1.cpp
+    5.1.cpp \
+    3.1.4.cpp
 
 DISTFILES +=
