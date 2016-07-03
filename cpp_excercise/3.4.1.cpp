@@ -23,6 +23,7 @@ void compute_prefix(const char *pattern, int next[]) {
         while (pattern[i] == pattern[j+1]) ++j;
 
         next[i] = j;
+//        printf("next %d = %d\n", i, j);
     }
 
 }
@@ -34,14 +35,14 @@ int kmp(const char *text, const char *pattern) {
     const int m = strlen(pattern);
     if (n == 0 && m == 0) return 0; //
     if (m == 0) return 0;//
-    int *next = (int *)malloc(sizeof(int) * m);
+    int *next = (int*)malloc(sizeof(int) * m);
 
     compute_prefix(pattern, next);
 
     for (i = 0; i < n; ++i) {
         if (j > -1 && pattern[j+1] != text[i]) j = next[j];
 
-        if (next[j+1] == next[i])// without && j < m - 1, unnecessary
+        if (pattern[j+1] == text[i])// without && j < m - 1, unnecessary
             ++j;
 
         if (j == m - 1) {
@@ -56,7 +57,7 @@ int kmp(const char *text, const char *pattern) {
 
 int main(int argc, char *argv[])
 {
-    char text[] = "ABC ABCDAB ABCDABDABCDABDDABDE";
+    char text[] = "ABC ABCDABD";
     char pattern[] = "ABCDABD";
     char *ch = text;
     int i = kmp(text, pattern);
