@@ -16,9 +16,18 @@ static tbt_node_t *first(tbt_node_t *p);
 static tbt_node_t *next(const tbt_node_t *p);
 
 static tbt_node_t *first(tbt_node_t *p) {
-    tbt_node_t *res = p;
-    while (p->ltag != NULL) {
+    if (p == NULL) return NULL;//
+    while (p->ltag == 0) {//
+        p = p->left;//? set a new var?
+    }
+    return p;//
+}
 
+static tbt_node_t *next(const tbt_node_t *p) {
+    if (p->rtag == 0) {
+        return first(p->right);
+    } else {
+        return p->right;
     }
 }
 
