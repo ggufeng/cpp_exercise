@@ -11,6 +11,7 @@ SOURCES += \
     4.1.2.cpp \
     5.1.cpp \
     3.1.4.cpp \
-    3.4.1.cpp
+    3.4.1.cpp \
+    5.2.cpp
 
 DISTFILES +=
