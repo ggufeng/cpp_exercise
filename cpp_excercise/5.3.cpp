@@ -128,32 +128,32 @@ void pre_order_morris(bt_node_t *root, int(*visit)(bt_node_t*)) {
     }
 }
 
-static void reverse(bt_node_t *from, bt_node_t *to) {
-    bt_node_t *x = from, *y = from->right, *z;
-    if (from == to) return;
+//static void reverse(bt_node_t *from, bt_node_t *to) {
+//    bt_node_t *x = from, *y = from->right, *z;
+//    if (from == to) return;
 
-    while (x != to) {
-        z = y->right;
-        y->right = x;
-        x = y;
-        y = z;
-    }
-}
+//    while (x != to) {
+//        z = y->right;
+//        y->right = x;
+//        x = y;
+//        y = z;
+//    }
+//}
 
-static void visit_reverse(bt_node_t *from, bt_node_t *to,
-                          int (*visit)(bt_node_t*)) {
-    bt_node_t *p = to;
-    reverse(from, to);
+//static void visit_reverse(bt_node_t *from, bt_node_t *to,
+//                          int (*visit)(bt_node_t*)) {
+//    bt_node_t *p = to;
+//    reverse(from, to);
 
-    while (1) {
-        visit(p);
-        if (p == from)
-            break;
-        p = p->right;
-    }
+//    while (1) {
+//        visit(p);
+//        if (p == from)
+//            break;
+//        p = p->right;
+//    }
 
-    reverse(to, from);
-}
+//    reverse(to, from);
+//}
 
 // original is wrong
 //void post_order_morris(bt_node_t *root, int(*visit)(bt_node_t*)) {
@@ -186,34 +186,85 @@ static void visit_reverse(bt_node_t *from, bt_node_t *to,
 //}
 
 // need to be modified
-void post_order_morris(bt_node_t *root, int(*visit)(bt_node_t*)) {
-    if (root != NULL) {
-        bt_node_t *pre;
-        bt_node_t *cur = root;
-        while (cur != NULL) {
-//            visit(cur);
-            if (cur->left == NULL && cur->right == cur) {
-                visit(cur);
+/*
+* @brief 逆转路径.
+* @param[in] from from
+* @param[to] to to
+* @return 无
+5.3 Morris Traversal 31
+*/
+static void reverse(bt_node_t *from, bt_node_t *to)
+{
+    bt_node_t *x = from, *y = from->right, *z;
+    if (from == to) return;
+    while (x != to)
+    {
+        z = y->right;
+        y->right = x;
+        x = y;
+        y = z;
+    }
+}
+/*
+* @brief 访问逆转后的路径上的所有结点.
+* @param[in] from from
+* @param[to] to to
+* @return 无
+*/
+static void visit_reverse(bt_node_t* from, bt_node_t *to,int (*visit)(bt_node_t*))
+{
+    bt_node_t *p = to;
+    reverse(from, to);
+    while (1)
+    {
+        visit(p);
+        if (p == from)
+            break;
+        p = p->right;
+    }
+    reverse(to, from);
+}
+/**
+* @brief 后序遍历，Morris 算法.
+* @param[in] root根节点
+* @param[in] visit 访问函数
+* @return 无
+*/
+void post_order_morris(bt_node_t *root, int (*visit)(bt_node_t*))
+{
+    bt_node_t dump = { 0, NULL, NULL };
+    bt_node_t *cur, *prev = NULL;
+    dump.left = root;
+    cur = &dump;
+    while (cur != NULL )
+    {
+        if (cur->left == NULL )
+        {
+            prev = cur; /* 必须要有*/
+            cur = cur->right;
+        }
+        else
+        {
+            bt_node_t *node = cur->left;
+            while (node->right != NULL && node->right != cur)
+                node = node->right;
+            if (node->right == NULL )   /* 还没线索化，则建立线索*/
+            {
+                node->right = cur;
+                prev = cur; /* 必须要有*/
+                cur = cur->left;
+            }
+            else     /* 已经线索化，则访问节点，并删除线索 */
+            {
+                visit_reverse(cur->left, prev, visit); // call print
+                prev->right = NULL;
+                prev = cur; /* 必须要有*/
                 cur = cur->right;
-            } else {
-                pre = cur->left;
-                // the first time it comes back, cur = cur
-                while (pre->right != NULL && pre->right != cur)
-                    pre = pre->right;
-
-                if (pre->right == NULL) {
-                    visit(cur);
-                    pre->right = cur;
-                    cur = cur->left;
-                } else {
-//                    visit(cur);
-                    pre->right = NULL;
-                    cur = cur->right;
-                }
             }
         }
     }
 }
+
 
 bt_node_t *new_node(int i) {
     bt_node_t *node = (bt_node_t*)malloc(sizeof(bt_node_t));
