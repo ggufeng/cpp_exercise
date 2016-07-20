@@ -205,6 +205,7 @@ static void reverse(bt_node_t *from, bt_node_t *to)
         y = z;
     }
 }
+
 /*
 * @brief 访问逆转后的路径上的所有结点.
 * @param[in] from from
@@ -224,6 +225,7 @@ static void visit_reverse(bt_node_t* from, bt_node_t *to,int (*visit)(bt_node_t*
     }
     reverse(to, from);
 }
+
 /**
 * @brief 后序遍历，Morris 算法.
 * @param[in] root根节点
