@@ -185,12 +185,13 @@ void pre_order_morris(bt_node_t *root, int(*visit)(bt_node_t*)) {
 //    }
 //}
 
+// @F to be understand
 // need to be modified
 /*
 * @brief 逆转路径.
 * @param[in] from from
 * @param[to] to to
-* @return 无
+* @return � 
 5.3 Morris Traversal 31
 */
 static void reverse(bt_node_t *from, bt_node_t *to)
@@ -210,7 +211,7 @@ static void reverse(bt_node_t *from, bt_node_t *to)
 * @brief 访问逆转后的路径上的所有结点.
 * @param[in] from from
 * @param[to] to to
-* @return 无
+* @return � 
 */
 static void visit_reverse(bt_node_t* from, bt_node_t *to,int (*visit)(bt_node_t*))
 {
@@ -228,9 +229,9 @@ static void visit_reverse(bt_node_t* from, bt_node_t *to,int (*visit)(bt_node_t*
 
 /**
 * @brief 后序遍历，Morris 算法.
-* @param[in] root根节点
+* @param[in] root� �节点
 * @param[in] visit 访问函数
-* @return 无
+* @return � 
 */
 void post_order_morris(bt_node_t *root, int (*visit)(bt_node_t*))
 {
@@ -256,7 +257,7 @@ void post_order_morris(bt_node_t *root, int (*visit)(bt_node_t*))
                 prev = cur; /* 必须要有*/
                 cur = cur->left;
             }
-            else     /* 已经线索化，则访问节点，并删除线索 */
+            else     /* 已经线索化，则访问节点，并� 除线索 */
             {
                 visit_reverse(cur->left, prev, visit); // call print
                 prev->right = NULL;
