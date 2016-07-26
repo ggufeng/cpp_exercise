@@ -52,11 +52,60 @@ void heap_sift_down(const heap_t *h, const int start) {
 
     for (j = 2 * i + 1; j < h->size; j = 2*j + 1) {
         if (j < h->size - 1 &&
+                h->cmp(&(h->elems[j]), &(h->elems[j + 1])) > 0) {
+            ++j;
+        }
+
+        if (h->cmp(&tmp, &(h->elems[j])) <= 0) {
+            break;
+        } else {
+            h->elems[i] = h->elems[j];
+            i = j;
+        }
     }
+    h->elems[i] = tmp;
 }
 
+void heap_sift_up(const heap_t *h, const int start) {
+    int j = start;
+    int i = (j - 1) / 2;
+    const heap_elem_t tmp = h->elems[start];
 
+    while (j > 0) {
+        if (h->cmp(&(h->elems[i]), &tmp) <= 0) {
+            break;
+        } else {
+            h->elems[j] = h->elems[i];
+            j = i;
+            i = (i - 1) / 2;
+        }
+    }
+    h->elems[j] = tmp;
+}
 
+void heap_push(heap_t *h, const heap_elem_t x) {
+    if (h->size == h->capacity) {
+        heap_elem_t *tmp =
+                (heap_elem_t*)realloc(h->elems, h->capacity * 2 * sizeof(heap_elem_t));
+        h->elems = tmp;
+        h->capacity = 2;
+    }
+
+    h->elems[h->size] = x;
+    h->size++;
+
+    heap_sift_up(h, h->size - 1);
+}
+
+void heap_pop(heap_t *h) {
+    h->elems[0] = h->elems[h->size - 1];
+    h->size --;
+    heap_sift_down(h, 0);
+}
+
+heap_elem_t heap_top(const heap_t *h) {
+    return h->elems[0];
+}
 
 
 
