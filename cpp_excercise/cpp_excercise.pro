@@ -17,7 +17,8 @@ SOURCES += \
     5.2.cpp \
     3.4.2.cpp \
     5.3.cpp \
-    5.4.cpp
+    5.4.cpp \
+    5.5.cpp
 
 
 DISTFILES +=
