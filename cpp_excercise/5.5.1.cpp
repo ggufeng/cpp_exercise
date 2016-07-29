@@ -1,6 +1,8 @@
 #include <stdlib.h>
-#include <stralign.h>
+#include <string.h>
 
+
+//@F to be read
 typedef int heap_elem_t;
 
 typedef struct heap_t {
